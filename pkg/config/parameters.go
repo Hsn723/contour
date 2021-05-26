@@ -564,6 +564,10 @@ type Parameters struct {
 	// RateLimitService optionally holds properties of the Rate Limit Service
 	// to be used for global rate limiting.
 	RateLimitService RateLimitService `yaml:"rateLimitService,omitempty"`
+
+	// StripTrailingHostDot instructs Envoy to strip the trailing dot
+	// from the host/authority header.
+	StripTrailingHostDot bool `yaml:"stripTrailingHostDot,omitempty"`
 }
 
 // RateLimitService defines properties of a global Rate Limit Service.

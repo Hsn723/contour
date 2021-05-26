@@ -308,6 +308,7 @@ func doServe(log logrus.FieldLogger, ctx *serveContext) error {
 		AllowChunkedLength:            !ctx.Config.DisableAllowChunkedLength,
 		XffNumTrustedHops:             ctx.Config.Network.XffNumTrustedHops,
 		ConnectionBalancer:            ctx.Config.Listener.ConnectionBalancer,
+		StripTrailingHostDot:          ctx.Config.StripTrailingHostDot,
 	}
 
 	if ctx.Config.RateLimitService.ExtensionService != "" {
