@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/ahmetb/gen-crd-api-reference-docs v0.3.0
 	github.com/bombsimon/logrusr v1.0.0
-	github.com/envoyproxy/go-control-plane v0.9.9-0.20210111201334-f1f47757da33
+	github.com/envoyproxy/go-control-plane v0.9.10-0.20210525180054-fd0c2bd4f17d
 	github.com/go-logr/logr v0.4.0
 	github.com/golang/protobuf v1.4.3
 	github.com/google/go-cmp v0.5.2
@@ -19,7 +19,7 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/stretchr/testify v1.6.1
 	google.golang.org/genproto v0.0.0-20201110150050-8816d57aaa9a
-	google.golang.org/grpc v1.27.1
+	google.golang.org/grpc v1.36.0
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v2 v2.4.0

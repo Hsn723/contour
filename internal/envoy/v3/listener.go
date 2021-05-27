@@ -154,6 +154,7 @@ type httpConnectionManagerBuilder struct {
 	codec                         HTTPVersionType // Note the zero value is AUTO, which is the default we want.
 	allowChunkedLength            bool
 	numTrustedHops                uint32
+	stripTrailingHostDot          bool
 }
 
 // RouteConfigName sets the name of the RDS element that contains
@@ -228,6 +229,11 @@ func (b *httpConnectionManagerBuilder) AllowChunkedLength(enabled bool) *httpCon
 
 func (b *httpConnectionManagerBuilder) NumTrustedHops(num uint32) *httpConnectionManagerBuilder {
 	b.numTrustedHops = num
+	return b
+}
+
+func (b *httpConnectionManagerBuilder) StripTrailingHostDot(strip bool) *httpConnectionManagerBuilder {
+	b.stripTrailingHostDot = strip
 	return b
 }
 
@@ -406,6 +412,8 @@ func (b *httpConnectionManagerBuilder) Get() *envoy_listener_v3.Filter {
 		DrainTimeout:        envoy.Timeout(b.connectionShutdownGracePeriod),
 		DelayedCloseTimeout: envoy.Timeout(b.delayedCloseTimeout),
 		XffNumTrustedHops:   b.numTrustedHops,
+
+		StripTrailingHostDot: b.stripTrailingHostDot,
 	}
 
 	// Max connection duration is infinite/disabled by default in Envoy, so if the timeout setting

@@ -139,6 +139,11 @@ type ListenerConfig struct {
 	// RateLimitConfig optionally configures the global Rate Limit Service to be
 	// used.
 	RateLimitConfig *RateLimitConfig
+
+	// StripTrailingHostDot instructs envoy whether Envoy should strip
+	// the trailing dot of the host/authority header before processing the request
+	// by HTTP filters or routing.
+	StripTrailingHostDot bool
 }
 
 type RateLimitConfig struct {
@@ -380,6 +385,7 @@ func visitListeners(root dag.Vertex, lvc *ListenerConfig) map[string]*envoy_list
 			AllowChunkedLength(lvc.AllowChunkedLength).
 			NumTrustedHops(lvc.XffNumTrustedHops).
 			AddFilter(envoy_v3.GlobalRateLimitFilter(envoyGlobalRateLimitConfig(lv.RateLimitConfig))).
+			StripTrailingHostDot(lvc.StripTrailingHostDot).
 			Get()
 
 		lv.listeners[httpListener.Name] = envoy_v3.Listener(
@@ -497,6 +503,7 @@ func (v *listenerVisitor) visit(vertex dag.Vertex) {
 				AllowChunkedLength(v.ListenerConfig.AllowChunkedLength).
 				NumTrustedHops(v.ListenerConfig.XffNumTrustedHops).
 				AddFilter(envoy_v3.GlobalRateLimitFilter(envoyGlobalRateLimitConfig(v.RateLimitConfig))).
+				StripTrailingHostDot(v.StripTrailingHostDot).
 				Get()
 
 			filters = envoy_v3.Filters(cm)
@@ -561,6 +568,7 @@ func (v *listenerVisitor) visit(vertex dag.Vertex) {
 				AllowChunkedLength(v.ListenerConfig.AllowChunkedLength).
 				NumTrustedHops(v.ListenerConfig.XffNumTrustedHops).
 				AddFilter(envoy_v3.GlobalRateLimitFilter(envoyGlobalRateLimitConfig(v.RateLimitConfig))).
+				StripTrailingHostDot(v.StripTrailingHostDot).
 				Get()
 
 			// Default filter chain
